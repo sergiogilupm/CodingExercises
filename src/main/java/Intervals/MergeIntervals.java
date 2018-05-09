@@ -1,3 +1,5 @@
+package Intervals;
+
 import java.util.*;
 
 public class MergeIntervals {
