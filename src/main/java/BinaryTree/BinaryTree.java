@@ -23,6 +23,24 @@ public class BinaryTree {
         }
     }
 
+    public int getHeight(){
+        return getHeight(root);
+    }
+
+    private int getHeight(BTNode currentNode) {
+        if (currentNode == null) {
+            return 0;
+        } else {
+            int leftHeight = getHeight(currentNode.getLeftChild());
+            int rightHeight = getHeight(currentNode.getRightChild());
+
+            int maxHeight = (leftHeight > rightHeight) ? leftHeight : rightHeight;
+
+            return maxHeight + 1;
+        }
+    }
+
+
     private void insertNodeRecursive(BTNode currentNode, int newValue) {
         int currentNodeValue = currentNode.getValue();
         if (newValue < currentNodeValue) {
@@ -52,7 +70,7 @@ public class BinaryTree {
     }
 
     public LinkedList[] getListOfNodesByLevel() {
-        LinkedList[] lists = new LinkedList[10];
+        LinkedList[] lists = new LinkedList[getHeight()];
         insertNewElementInList(root, lists, 0);
         return lists;
     }
@@ -69,16 +87,16 @@ public class BinaryTree {
 
         listByCurrentHeight.addLast(node.getValue());
         listOfNodes[currentHeight] = listByCurrentHeight;
-        insertNewElementInList(node.getLeftChild(), listOfNodes, ++currentHeight);
-        insertNewElementInList(node.getRightChild(), listOfNodes, ++currentHeight);
+        insertNewElementInList(node.getLeftChild(), listOfNodes, currentHeight + 1);
+        insertNewElementInList(node.getRightChild(), listOfNodes, currentHeight + 1);
     }
 
     private void printTreeRecursive(Stack<BTNode> currentLevelNodes, int level) {
         Stack<BTNode> nextLevelNodes = new Stack<>();
-        System.out.print("Printing level " + level + ":");
+        String levelPrint = "Printing level " + level + ": ";
         while (!currentLevelNodes.empty()) {
             BTNode currentNode = currentLevelNodes.pop();
-            System.out.print(" " + currentNode.getValue());
+            levelPrint = levelPrint + currentNode.getValue() + " ";
             BTNode leftChild = currentNode.getLeftChild();
             BTNode rightChild = currentNode.getRightChild();
             if (rightChild != null) {
@@ -88,6 +106,8 @@ public class BinaryTree {
                 nextLevelNodes.push(leftChild);
             }
         }
+        System.out.println(levelPrint);
+        System.out.flush();
 
         if (!nextLevelNodes.empty()){
             printTreeRecursive(nextLevelNodes, level + 1);

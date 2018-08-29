@@ -1,7 +1,5 @@
 package BinaryTree;
 
-import BinaryTree.BinaryTree;
-
 import java.util.LinkedList;
 
 public class BinaryTreeApp {
@@ -17,7 +15,7 @@ public class BinaryTreeApp {
         binaryTree.insertNode(17);
         binaryTree.insertNode(1);
 
-        //binaryTree.printTreeByLevel();
+        binaryTree.printTreeByLevel();
 
         LinkedList[] lists = binaryTree.getListOfNodesByLevel();
 
